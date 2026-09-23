@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>DODGER: Safety-Guided Reinforcement Learning for Robot Navigation Among Dynamic Obstacles</title>
+  <meta name="description" content="DODGER is a safety-guided reinforcement learning framework for goal-directed robot navigation among multiple dynamic obstacles.">
+
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="DODGER: Safety-Guided Reinforcement Learning for Robot Navigation Among Dynamic Obstacles">
+  <meta property="og:description" content="DODGER is a safety-guided reinforcement learning framework for goal-directed robot navigation among multiple dynamic obstacles.">
+  <!-- Social preview: make this an absolute URL once the page's final address is known -->
+  <meta property="og:image" content="static/images/posters/hero.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23009E73'/%3E%3Ctext x='32' y='46' text-anchor='middle' font-family='Arial,Helvetica,sans-serif' font-weight='700' font-size='40' fill='%23fff'%3ED%3C/text%3E%3C/svg%3E">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,400;0,600;0,700;1,400&display=swap">
+  <link rel="stylesheet" href="static/css/style.css">
+  <link rel="preload" as="image" href="static/images/posters/hero.jpg">
+  <script>document.documentElement.classList.add('js');</script>
+</head>
+
+<body>
+
+  <!-- ================================================================ Hero -->
+  <header class="hero">
+    <video class="hero-video" data-autoplay autoplay muted loop playsinline preload="auto"
+           poster="static/images/posters/hero.jpg" aria-hidden="true">
+      <source src="static/videos/hero.mp4" type="video/mp4">
+    </video>
+    <div class="hero-title">
+      <h1>
+        <span class="t-main">DODGER:</span>
+        <span class="t-sub">Safety-Guided Reinforcement Learning for<br>
+          Robot Navigation Among Dynamic Obstacles</span>
+      </h1>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- ======================================= Authors, links, intro video -->
+    <section class="band meta">
+      <div class="container">
+        <p class="authors">
+          <span class="author">Sanghyuk Park<sup>*1</sup>,</span>
+          <span class="author">Kwanwoo Lee<sup>*1</sup>,</span>
+          <span class="author">Taekyung Kim<sup>*2</sup>,</span>
+          <span class="author">Seohyeon Lim<sup>3</sup>,</span>
+          <span class="author">and Yisoo Lee<sup>&dagger;4</sup></span>
+        </p>
+        <p class="affiliations">
+          <span><sup>1</sup>Seoul National University,</span>
+          <span><sup>2</sup>University of Michigan,</span>
+          <span><sup>3</sup>Yonsei University,</span>
+          <span><sup>4</sup>KIST</span>
+        </p>
+        <p class="author-notes"><sup>*</sup>Equal contribution&ensp;<sup>&dagger;</sup>Corresponding author</p>
+
+        <div class="links">
+          <!-- arXiv: put the paper URL in href (buttons with an empty href are shown but not clickable) -->
+          <a class="btn-pill" href="" target="_blank" rel="noopener">
+            <svg viewBox="0 0 448 512" aria-hidden="true"><path transform="matrix(1.5499998,0,0,-1.5499998,-123.19936,553.59966)" d="m 119.65,351.996 c -5.84961,0.13477 -11.1943,-3.29883 -13.502,-8.67578 -2.19629,-5.27051 -0.61914,-8.9668 4.19727,-15.8652 7.05469,-10.3799 78.8242,-96.5625 78.8242,-96.5625 l -15.8828,-14.8633 c -13.3809,-13.3779 -13.9561,-31.333 -1.50977,-43.7754 l 18.4922,-17.6133 -51.5977,-63.377 c -4.00586,-4.26758 -6.48535,-11.7559 -4.24805,-17.1309 2.27832,-5.53613 7.69727,-9.12891 13.6836,-9.07031 3.83398,0.0957 7.43262,1.87402 9.83789,4.86133 l 61.3691,57.0566 94.5762,-90.0703 c 3.19434,-3.08398 7.44336,-4.83984 11.8828,-4.91016 1.60449,0.0039 3.19824,0.245117 4.73242,0.714844 5.7793,1.80566 10.249,6.41797 11.8711,12.252 1.2998,5.47363 -0.27637,11.2334 -4.18164,15.2832 l -83.0859,100.011996 14.8789,13.834 c 11.0957,10.0029 11.1543,27.3906 0.12695,37.4688 l -16.2949,15.6309 56.2559,66.4434 0.0742,0.0859 0.0664,0.0899 c 5.02734,6.53125 7.43164,11.5615 4.83984,17.9395 -3.13379,5.96875 -8.69727,10.29 -15.2559,11.8516 -0.67676,0.0908 -1.35938,0.13574 -2.04297,0.13671 l -0.004,-0.0117 c -4.42871,-0.27051 -8.61035,-2.13086 -11.7754,-5.24023 l -0.13086,-0.10743 -0.12304,-0.11132 -65.207,-59.127 -89.8965,86.2402 c 0,0 -5.33398,6.47754 -10.9707,6.61133 z m 178.104,-33.041 c 0.47852,-0.002 0.95703,-0.0332 1.43164,-0.0957 4.84277,-1.33301 8.95605,-4.54004 11.4316,-8.91016 1.44922,-3.5625 1.00293,-6.45703 -4.19727,-13.2148 l -56.0586,-66.2188 -26.375,25.3027 64.9551,58.9062 c 2.33887,2.41504 5.46484,3.91113 8.8125,4.2168 v 0.0137 z M 192.436,227.402 334.446,57.244 c 2.78711,-3.48926 4.5293,-6.97949 3.3418,-10.9121 -1.16113,-4.30273 -4.43457,-7.71777 -8.68555,-9.05664 -1.08105,-0.333984 -2.20508,-0.503906 -3.33594,-0.505859 -3.20801,0.07617 -6.26953,1.35645 -8.57617,3.58789 l -142.033,135.284999 c -11.1719,11.1719 -9.48242,26.0195 1.39258,36.8945 z"/></svg>
+            <span>arXiv</span>
+          </a>
+          <a class="btn-pill" href="https://dodger.taekyung.me" target="_blank" rel="noopener">
+            <svg viewBox="0 0 640 512" aria-hidden="true"><path d="M192 64C86 64 0 150 0 256S86 448 192 448H448c106 0 192-86 192-192s-86-192-192-192H192zM496 168a40 40 0 1 1 0 80 40 40 0 1 1 0-80zM392 304a40 40 0 1 1 80 0 40 40 0 1 1 -80 0zM168 200c0-13.3 10.7-24 24-24s24 10.7 24 24v32h32c13.3 0 24 10.7 24 24s-10.7 24-24 24H216v32c0 13.3-10.7 24-24 24s-24-10.7-24-24V280H136c-13.3 0-24-10.7-24-24s10.7-24 24-24h32V200z"/></svg>
+            <span>Web Demo</span>
+          </a>
+          <!-- Code: put the repository URL in href -->
+          <a class="btn-pill" href="" target="_blank" rel="noopener">
+            <svg viewBox="0 0 496 512" aria-hidden="true"><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+            <span>Code</span>
+          </a>
+          <details class="related">
+            <summary class="btn-pill btn-pill--outline">
+              <svg viewBox="0 0 576 512" aria-hidden="true"><path d="M575.8 255.5c0 18-15 32.1-32 32.1h-32l.7 160.2c0 2.7-.2 5.4-.5 8.1V472c0 22.1-17.9 40-40 40H456c-1.1 0-2.2 0-3.3-.1c-1.4 .1-2.8 .1-4.2 .1H416 392c-22.1 0-40-17.9-40-40V448 384c0-17.7-14.3-32-32-32H256c-17.7 0-32 14.3-32 32v64 24c0 22.1-17.9 40-40 40H160 128.1c-1.5 0-3-.1-4.5-.2c-1.2 .1-2.4 .2-3.6 .2H104c-22.1 0-40-17.9-40-40V360c0-.9 0-1.9 .1-2.8V287.6H32c-18 0-32-14-32-32.1c0-9 3-17 10-24L266.4 8c7-7 15-8 22-8s15 2 21 7L564.8 231.5c8 7 12 15 11 24z"/></svg>
+              <span>Related Research</span>
+              <span class="chevron"><svg viewBox="0 0 512 512" aria-hidden="true"><path d="M233.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 338.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z"/></svg></span>
+            </summary>
+            <div class="related-menu">
+              <a href="https://www.taekyung.me/dpcbf" target="_blank" rel="noopener">Dynamic Parabolic CBF</a>
+            </div>
+          </details>
+        </div>
+
+        <!-- Overview video on YouTube: to switch videos, change the id after /embed/ -->
+        <div class="intro-video">
+          <iframe src="https://www.youtube-nocookie.com/embed/2c8UtzkYrzc?rel=0"
+                  title="DODGER overview video" loading="lazy"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================================================== Abstract -->
+    <section class="band band--mint" id="abstract">
+      <div class="container">
+        <h2 class="section-title">Abstract</h2>
+        <div class="prose">
+          <p>
+            Robots operating in human-centered environments must safely navigate among multiple dynamic obstacles to avoid collisions with people and surrounding infrastructure. Control barrier functions (CBFs) provide an effective mechanism for safety filtering, and recent CBF-based reinforcement learning (RL) methods embed such safety information into learned policies. However, executing only safety-filtered actions during training can restrict policy exploration, a limitation that becomes particularly consequential in dynamic scenes where safety depends on relative robot-obstacle motion. We propose <strong>DODGER</strong>, a safety-guided RL framework that directly executes policy-generated actions to drive training rollouts while using CBF-filtered references and constraint violations to shape the policy toward collision-avoidance behavior. We evaluate DODGER through a Dubins-car safety analysis and demonstrate goal-directed navigation among multiple dynamic obstacles in full-order humanoid simulation and real-world humanoid experiments using LiDAR-based perception, without a runtime safety filter.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================== Overall framework -->
+    <section class="band" id="framework">
+      <div class="container">
+        <h2 class="section-title">Overall Framework</h2>
+      </div>
+
+      <div class="wide fw-row">
+        <div class="fw-main">
+          <figure class="fw-figure">
+            <div class="fw-stack" data-zoom role="button" tabindex="0" aria-label="Enlarge the overall framework figure">
+              <img data-layer="base" src="static/images/overall_framework.webp" width="3200" height="915"
+                   alt="Overall DODGER framework: high-level navigation policy, rollout with a pretrained locomotion controller, and safety-guided policy update.">
+              <img data-layer="high_level_policy" src="static/images/high_level_policy.webp" width="3200" height="915" alt="" aria-hidden="true">
+              <img data-layer="policy_rollout" src="static/images/policy_rollout.webp" width="3200" height="915" alt="" aria-hidden="true">
+              <img data-layer="safety_guidance" src="static/images/safety_guidance.webp" width="3200" height="915" alt="" aria-hidden="true">
+            </div>
+            <p class="caption">
+              <svg viewBox="0 0 448 512" aria-hidden="true"><path d="M160 64c0-8.8 7.2-16 16-16s16 7.2 16 16V200c0 10.3 6.6 19.5 16.4 22.8s20.6-.1 26.8-8.3c3-3.9 7.6-6.4 12.8-6.4c8.8 0 16 7.2 16 16c0 10.3 6.6 19.5 16.4 22.8s20.6-.1 26.8-8.3c3-3.9 7.6-6.4 12.8-6.4c7.8 0 14.3 5.6 15.7 13c1.6 8.2 7.3 15.1 15.1 18s16.7 1.6 23.3-3.6c2.7-2.1 6.1-3.4 9.9-3.4c8.8 0 16 7.2 16 16l0 16V392c0 39.8-32.2 72-72 72H272 212.3h-.9c-37.4 0-72.4-18.7-93.2-49.9L50.7 312.9c-4.9-7.4-2.9-17.3 4.4-22.2s17.3-2.9 22.2 4.4L116 353.2c5.9 8.8 16.8 12.7 26.9 9.7s17-12.4 17-23V320 64zM176 0c-35.3 0-64 28.7-64 64V261.7C91.2 238 55.5 232.8 28.5 250.7C-.9 270.4-8.9 310.1 10.8 339.5L78.3 440.8c29.7 44.5 79.6 71.2 133.1 71.2h.9H272h56c66.3 0 120-53.7 120-120V288l0-16c0-35.3-28.7-64-64-64c-4.5 0-8.8 .5-13 1.3c-11.7-15.4-30.2-25.3-51-25.3c-6.9 0-13.5 1.1-19.7 3.1C288.7 170.7 269.6 160 248 160c-2.7 0-5.4 .2-8 .5V64c0-35.3-28.7-64-64-64zm48 304c0-8.8-7.2-16-16-16s-16 7.2-16 16v96c0 8.8 7.2 16 16 16s16-7.2 16-16V304zm48-16c-8.8 0-16 7.2-16 16v96c0 8.8 7.2 16 16 16s16-7.2 16-16V304c0-8.8-7.2-16-16-16zm80 16c0-8.8-7.2-16-16-16s-16 7.2-16 16v96c0 8.8 7.2 16 16 16s16-7.2 16-16V304z"/></svg>
+              <span class="hint-hover">Hover over the marked paragraphs below to highlight each component.</span>
+              <span class="hint-touch">Tap the marked paragraphs below to highlight each component.</span>
+            </p>
+          </figure>
+
+          <div class="prose fw-text">
+            <p>DODGER learns goal-directed navigation among multiple dynamic obstacles.</p>
+            <p data-hl="high_level_policy" tabindex="0">The robot, goal, and LiDAR-detected obstacles form a local interaction graph. A robot-centered graph attention encoder transforms this graph into a compact representation of the surrounding scene.</p>
+            <p data-hl="policy_rollout" tabindex="0">Training rollouts are driven by policy-generated actions, which are converted into velocity commands and executed by a fixed, pretrained locomotion controller.</p>
+            <p data-hl="safety_guidance" tabindex="0">During training, DPCBF-based filtered reference actions and constraint violations guide policy updates without replacing the policy actions used for environment interaction.</p>
+            <p>At deployment, the learned policy operates without an online safety filter.</p>
+          </div>
+        </div>
+
+        <figure class="fw-media">
+          <div class="fw-video" data-zoom role="button" tabindex="0" aria-label="Enlarge the DPCBF visualization video">
+            <video data-autoplay muted loop playsinline preload="none"
+                   poster="static/images/posters/dpcbf_visualization.jpg"
+                   data-src="static/videos/dpcbf_visualization.mp4"
+                   aria-label="DPCBF visualization"></video>
+          </div>
+          <p class="caption">
+            <svg viewBox="0 0 512 512" aria-hidden="true"><path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM184 296c0 13.3 10.7 24 24 24s24-10.7 24-24V232h64c13.3 0 24-10.7 24-24s-10.7-24-24-24H232V120c0-13.3-10.7-24-24-24s-24 10.7-24 24v64H120c-13.3 0-24 10.7-24 24s10.7 24 24 24h64v64z"/></svg>
+            <span class="hint-hover">Click to enlarge</span>
+            <span class="hint-touch">Tap to enlarge</span>
+          </p>
+        </figure>
+      </div>
+    </section>
+
+    <!-- ======================================= Results 1: learning framework -->
+    <section class="band band--mint" id="learning-framework">
+      <div class="container">
+        <p class="eyebrow">Results</p>
+        <h2 class="section-title">Learning Framework Evaluation</h2>
+
+        <div class="fig-pair">
+          <figure class="fig-card">
+            <figcaption>Dubins-Car Safety Analysis</figcaption>
+            <img data-zoom role="button" tabindex="0" aria-label="Enlarge the Dubins-car safety analysis figure" src="static/images/dubins_results.webp" width="1800" height="1006" loading="lazy"
+                 alt="Critic-induced risk regions of DODGER and CBF-RL compared with the HJ reference unsafe set, with unsafe-set coverage and false-positive bar charts.">
+          </figure>
+          <figure class="fig-card">
+            <figcaption>Humanoid RL Training</figcaption>
+            <img data-zoom role="button" tabindex="0" aria-label="Enlarge the humanoid RL training figure" src="static/images/algorithm_comparison.webp" width="1800" height="1071" loading="lazy"
+                 alt="Evaluation success rate versus environment transitions for DODGER, CBF-RL-Min, and CBF-RL.">
+          </figure>
+        </div>
+
+        <div class="prose">
+          <p>We evaluate DODGER’s learning framework at two complementary scales. On the low-dimensional Dubins-car benchmark, DODGER learns a critic-induced risk region that more closely matches the HJ reference unsafe set than <span class="nowrap">CBF-RL</span>, achieving <span class="nowrap">94.7 ± 0.93%</span> unsafe-set coverage and an <span class="nowrap">8.9 ± 2.47%</span> false-positive measure, compared with <span class="nowrap">71.2 ± 3.47%</span> and <span class="nowrap">18.5 ± 4.62%</span> for <span class="nowrap">CBF-RL</span>.</p>
+          <p>In full-order humanoid training with obstacle speeds up to <span class="nowrap">0.6 m/s</span>, DODGER reaches the 95% convergence threshold after approximately 114 million environment transitions, whereas <span class="nowrap">CBF-RL-Min</span> requires approximately 277 million transitions and <span class="nowrap">CBF-RL</span> does not converge within 600 million transitions. When the maximum obstacle speed is increased to <span class="nowrap">0.8 m/s</span>, DODGER remains the only method to converge, reaching the criterion after approximately 536 million transitions, while neither baseline converges within the extended budget of 1.2 billion transitions.</p>
+          <p>Together, these results support the benefit of preserving policy-driven exploration: DODGER learns a more accurate safety representation and converges more efficiently as dynamic-obstacle navigation becomes increasingly challenging.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========================================= Results 2: CBF formulations -->
+    <section class="band" id="cbf-comparison">
+      <div class="container">
+        <p class="eyebrow">Results</p>
+        <h2 class="section-title">CBF Formulation Comparison</h2>
+        <p class="lead">We compare DPCBF, C3BF, and a distance-based ECBF with yaw-rate regularization under the same DODGER training configuration.</p>
+
+        <div class="trio">
+          <figure class="vid-card vid-card--ours">
+            <h3>DODGER (DPCBF)</h3>
+            <video data-autoplay muted loop playsinline preload="none"
+                   poster="static/images/posters/dodger.jpg" data-src="static/videos/dodger.mp4"
+                   aria-label="DODGER with DPCBF guidance"></video>
+            <p>Reaches the goal using less conservative safety guidance and effective line-of-sight (LoS)-based directional guidance.</p>
+          </figure>
+          <figure class="vid-card">
+            <h3>Collision Cone CBF (C3BF)</h3>
+            <video data-autoplay muted loop playsinline preload="none"
+                   poster="static/images/posters/c3bf.jpg" data-src="static/videos/c3bf.mp4"
+                   aria-label="Collision cone CBF (C3BF) baseline"></video>
+            <p>Fails to reach the goal because of an overly conservative unsafe region.</p>
+          </figure>
+          <figure class="vid-card">
+            <h3>Distance-Based ECBF + Yaw Regularization</h3>
+            <video data-autoplay muted loop playsinline preload="none"
+                   poster="static/images/posters/distance.jpg" data-src="static/videos/distance.mp4"
+                   aria-label="Distance-based ECBF with yaw regularization baseline"></video>
+            <p>Produces excessive and unnecessary rotational motion despite yaw-rate regularization.</p>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================= Results 3: real robot -->
+    <section class="band band--mint" id="real-robot">
+      <div class="container">
+        <p class="eyebrow">Results</p>
+        <h2 class="section-title">Real-Robot Experiments</h2>
+        <p class="lead">We deploy DODGER on a Unitree G1 humanoid across four real-world scenarios involving multiple moving pedestrians, without using an online safety filter.</p>
+
+        <!-- Scenario 1 -->
+        <div class="scenario">
+          <div class="scenario-head">
+            <h3>Scenario 1</h3>
+            <p>The robot navigates through pedestrians moving against its direction of travel.</p>
+          </div>
+          <div class="carousel">
+            <div class="carousel-viewport">
+              <div class="carousel-track">
+                <div class="slide">
+                  <div class="pair" data-sync>
+                    <div class="pair-item" style="--ar: 1.7778">
+                      <video muted playsinline preload="none" poster="static/images/posters/dodger_experiment_1_front_visualized.jpg"
+                             data-src="static/videos/dodger_experiment_1_front_visualized.mp4" aria-label="Scenario 1, trial 1, front view"></video>
+                    </div>
+                    <div class="pair-item" style="--ar: 1.225">
+                      <video muted playsinline preload="none" poster="static/images/posters/dodger_experiment_1_top_visualized.jpg"
+                             data-src="static/videos/dodger_experiment_1_top_visualized.mp4" aria-label="Scenario 1, trial 1, top view"></video>
+                    </div>
+                  </div>
+                </div>
+                <div class="slide">
+                  <div class="pair" data-sync>
+                    <div class="pair-item" style="--ar: 1.7778">
+                      <video muted playsinline preload="none" poster="static/images/posters/dodger_experiment_1_2_front.jpg"
+                             data-src="static/videos/dodger_experiment_1_2_front.mp4" aria-label="Scenario 1, trial 2, front view"></video>
+                    </div>
+                    <div class="pair-item" style="--ar: 1.175">
+                      <video muted playsinline preload="none" poster="static/images/posters/dodger_experiment_1_2_top.jpg"
+                             data-src="static/videos/dodger_experiment_1_2_top.mp4" aria-label="Scenario 1, trial 2, top view"></video>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="pills" role="tablist" aria-label="Scenario 1 trials">
+              <button class="pill" type="button" role="tab" aria-selected="true" aria-label="Trial 1"></button>
+              <button class="pill" type="button" role="tab" aria-selected="false" aria-label="Trial 2"></button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Scenario 2 -->
+        <div class="scenario">
+          <div class="scenario-head">
+            <h3>Scenario 2</h3>
+            <p>Pedestrians move independently. Two nearby people are initially detected as one obstacle and later separate into two.</p>
+          </div>
+          <div class="carousel">
+            <div class="carousel-viewport">
+              <div class="carousel-track">
+                <div class="slide">
+                  <div class="pair" data-sync>
+                    <div class="pair-item" style="--ar: 1.7778">
+                      <video muted playsinline preload="none" poster="static/images/posters/dodger_experiment_2_front_visualized.jpg"
+                             data-src="static/videos/dodger_experiment_2_front_visualized.mp4" aria-label="Scenario 2, trial 1, front view"></video>
+                    </div>
+                    <div class="pair-item" style="--ar: 0.9639">
+                      <video muted playsinline preload="none" poster="static/images/posters/dodger_experiment_2_top_visualized.jpg"
+                             data-src="static/videos/dodger_experiment_2_top_visualized.mp4" aria-label="Scenario 2, trial 1, top view"></video>
+                    </div>
+                  </div>
+                </div>
+                <div class="slide">
+                  <div class="pair" data-sync>
+                    <div class="pair-item" style="--ar: 1.7778">
+                      <video muted playsinline preload="none" poster="static/images/posters/dodger_experiment_2_2_front.jpg"
+                             data-src="static/videos/dodger_experiment_2_2_front.mp4" aria-label="Scenario 2, trial 2, front view"></video>
+                    </div>
+                    <div class="pair-item" style="--ar: 1.175">
+                      <video muted playsinline preload="none" poster="static/images/posters/dodger_experiment_2_2_top.jpg"
+                             data-src="static/videos/dodger_experiment_2_2_top.mp4" aria-label="Scenario 2, trial 2, top view"></video>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="pills" role="tablist" aria-label="Scenario 2 trials">
+              <button class="pill" type="button" role="tab" aria-selected="true" aria-label="Trial 1"></button>
+              <button class="pill" type="button" role="tab" aria-selected="false" aria-label="Trial 2"></button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Scenario 3 -->
+        <div class="scenario">
+          <div class="scenario-head">
+            <h3>Scenario 3</h3>
+            <p>A pedestrian repeatedly crosses the robot’s path to the goal.</p>
+          </div>
+          <div class="pair" data-sync>
+            <div class="pair-item" style="--ar: 1.2806">
+              <video muted playsinline preload="none" poster="static/images/posters/dodger_experiment_3_front.jpg"
+                     data-src="static/videos/dodger_experiment_3_front.mp4" aria-label="Scenario 3, front view"></video>
+            </div>
+            <div class="pair-item" style="--ar: 1.0722">
+              <video muted playsinline preload="none" poster="static/images/posters/dodger_experiment_3_top.jpg"
+                     data-src="static/videos/dodger_experiment_3_top.mp4" aria-label="Scenario 3, top view"></video>
+            </div>
+          </div>
+        </div>
+
+        <!-- Scenario 4 -->
+        <div class="scenario">
+          <div class="scenario-head">
+            <h3>Scenario 4</h3>
+            <p>Multiple pedestrians move around the robot, creating a highly constrained scene with only a narrow safe passage toward the goal.</p>
+          </div>
+          <div class="pair" data-sync>
+            <div class="pair-item" style="--ar: 1.7778">
+              <video muted playsinline preload="none" poster="static/images/posters/dodger_experiment_4_front.jpg"
+                     data-src="static/videos/dodger_experiment_4_front.mp4" aria-label="Scenario 4, front view"></video>
+            </div>
+            <div class="pair-item" style="--ar: 1.2222">
+              <video muted playsinline preload="none" poster="static/images/posters/dodger_experiment_4_top.jpg"
+                     data-src="static/videos/dodger_experiment_4_top.mp4" aria-label="Scenario 4, top view"></video>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================= BibTeX -->
+    <section class="band" id="bibtex">
+      <div class="container">
+        <h2 class="section-title">BibTeX</h2>
+        <div class="bibtex">
+          <button class="copy-btn" type="button" aria-label="Copy BibTeX to clipboard">
+            <span class="copy-icon"><svg viewBox="0 0 448 512" aria-hidden="true"><path d="M384 336H192c-8.8 0-16-7.2-16-16V64c0-8.8 7.2-16 16-16l140.1 0L400 115.9V320c0 8.8-7.2 16-16 16zM192 384H384c35.3 0 64-28.7 64-64V115.9c0-12.7-5.1-24.9-14.1-33.9L366.1 14.1c-9-9-21.2-14.1-33.9-14.1H192c-35.3 0-64 28.7-64 64V320c0 35.3 28.7 64 64 64zM64 128c-35.3 0-64 28.7-64 64V448c0 35.3 28.7 64 64 64H256c35.3 0 64-28.7 64-64V416H272v32c0 8.8-7.2 16-16 16H64c-8.8 0-16-7.2-16-16V192c0-8.8 7.2-16 16-16H96V128H64z"/></svg></span>
+            <span class="copied-icon"><svg viewBox="0 0 448 512" aria-hidden="true"><path d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"/></svg></span>
+            <span class="copy-label">Copy</span>
+          </button>
+          <pre><code>@misc{dodger,
+  title  = {{DODGER}: Safety-Guided Reinforcement Learning for Robot Navigation Among Dynamic Obstacles},
+  author = {Park, Sanghyuk and Lee, Kwanwoo and Kim, Taekyung and Lim, Seohyeon and Lee, Yisoo},
+  year   = {2026}
+}</code></pre>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Lightbox for enlarged figures and videos -->
+  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Enlarged view" hidden>
+    <button class="lightbox-close" type="button" aria-label="Close">
+      <svg viewBox="0 0 384 512" aria-hidden="true"><path d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z"/></svg>
+    </button>
+    <div class="lightbox-stage"></div>
+  </div>
+
+  <script src="static/js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,773 @@
+/* =========================================================================
+   DODGER project page
+   ========================================================================= */
+
+:root {
+  --green: #009E73;
+  --green-dark: #008461;
+  --green-soft: #CFE9DF;
+  --band-mint: #F2FAF7;
+  --title-main: #F1FFF9;
+  --title-sub: #D7F5E8;
+
+  --text: #1E2925;
+  --text-soft: #3A4843;
+  --muted: #62716B;
+  --line: #DCE8E3;
+
+  --gutter: 24px;
+  --container: 1120px;
+  --prose: 880px;
+  --wide: 1400px;
+  --radius: 12px;
+}
+
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+html.no-scroll { overflow: hidden; }
+
+body {
+  margin: 0;
+  background: #fff;
+  color: var(--text);
+  font-family: 'Open Sans', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  font-size: 17px;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+img, video { display: block; max-width: 100%; }
+video { background: #0F1714; }
+a { color: var(--green-dark); }
+
+/* =========================================================================
+   Hero
+   ========================================================================= */
+
+.hero {
+  position: relative;
+  height: 100vh;
+  height: 100svh;
+  min-height: 420px;
+  overflow: hidden;
+  background: #1A1F1D;
+}
+
+.hero-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  background: transparent;
+}
+
+/* Centered by default; main.js shifts it so it stays in the middle of the
+   visible part of the video and never gets closer than a small gap to the
+   video's bottom edge. */
+.hero-title {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  transform: translate3d(0, -50%, 0);
+  padding-inline: var(--gutter);
+  text-align: center;
+  pointer-events: none;
+  will-change: transform;
+}
+
+.hero-title h1 {
+  --sub: clamp(1.25rem, calc((100vw - 2 * var(--gutter)) / 22.8), 3.5rem);
+  margin: 0;
+  font-weight: 700;
+  letter-spacing: -0.005em;
+  text-shadow: 0 2px 16px rgba(0, 0, 0, 0.28), 0 1px 3px rgba(0, 0, 0, 0.22);
+  transition: opacity 0.5s ease;
+}
+/* main.js adds .fonts-ready once Open Sans has loaded (or after a timeout); the
+   animation shows the title anyway if main.js never runs. */
+.js:not(.fonts-ready) .hero-title h1 {
+  opacity: 0;
+  animation: title-failsafe 0s 3s forwards;
+}
+@keyframes title-failsafe { to { opacity: 1; } }
+
+.hero-title .t-main {
+  display: block;
+  color: var(--title-main);
+  font-size: max(calc(var(--sub) * 1.43), 2.975rem);
+  line-height: 1.12;
+  margin-bottom: 0.12em;
+}
+
+.hero-title .t-sub {
+  display: block;
+  color: var(--title-sub);
+  font-size: var(--sub);
+  line-height: 1.26;
+  text-wrap: balance;   /* only matters if a line has to wrap (fallback font, large text) */
+}
+
+/* =========================================================================
+   Layout: alternating bands
+   ========================================================================= */
+
+.band {
+  padding: 76px var(--gutter);
+  background: #fff;
+}
+.band--mint { background: var(--band-mint); }
+
+.container {
+  max-width: var(--container);
+  margin-inline: auto;
+}
+.prose {
+  max-width: var(--prose);
+  margin-inline: auto;
+}
+.wide {
+  max-width: var(--wide);
+  margin-inline: auto;
+}
+
+.prose p,
+.lead {
+  margin: 0 0 1.1em;
+  color: var(--text-soft);
+  text-align: justify;
+  hyphens: auto;
+  -webkit-hyphens: auto;
+}
+.prose p:last-child { margin-bottom: 0; }
+
+.lead {
+  max-width: var(--prose);
+  margin: 0 auto 40px;
+}
+
+.nowrap { white-space: nowrap; }
+
+/* ---- Headings ---- */
+
+.eyebrow {
+  margin: 0 0 6px;
+  text-align: center;
+  color: var(--green);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.section-title {
+  margin: 0 0 40px;
+  text-align: center;
+  color: var(--text);
+  font-size: 2rem;
+  font-weight: 700;
+  line-height: 1.25;
+}
+.section-title::after {
+  content: "";
+  display: block;
+  width: 44px;
+  height: 3px;
+  margin: 16px auto 0;
+  border-radius: 2px;
+  background: var(--green);
+}
+
+/* =========================================================================
+   Authors, links, intro video
+   ========================================================================= */
+
+.meta {
+  padding-top: 44px;
+  text-align: center;
+}
+
+.authors {
+  margin: 0;
+  color: var(--text);
+  font-size: 1.3rem;
+  line-height: 1.6;
+}
+.authors .author { white-space: nowrap; }
+.authors,
+.affiliations { text-wrap: balance; }
+.authors sup,
+.affiliations sup,
+.author-notes sup {
+  font-size: 0.62em;
+  line-height: 0;
+  margin-left: 1px;
+}
+.affiliations {
+  margin: 6px 0 0;
+  color: var(--text-soft);
+  font-size: 1.08rem;
+  line-height: 1.6;
+}
+.affiliations span { white-space: nowrap; }
+.author-notes {
+  margin: 6px 0 0;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.links {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 14px;
+  margin-top: 24px;
+}
+a.btn-pill:not([href]) { pointer-events: none; }   /* placeholder link (href="" in the HTML): fill in its URL */
+
+/* "Related Research" dropdown */
+.related { position: relative; }
+.related summary { list-style: none; cursor: pointer; }
+.related summary::-webkit-details-marker { display: none; }
+.btn-pill.btn-pill--outline {
+  background: #fff;
+  color: var(--green-dark);
+  box-shadow: inset 0 0 0 1.5px var(--green), 0 2px 8px rgba(0, 158, 115, 0.12);
+}
+.btn-pill.btn-pill--outline:hover {
+  background: var(--band-mint);
+  box-shadow: inset 0 0 0 1.5px var(--green-dark), 0 6px 16px rgba(0, 158, 115, 0.18);
+}
+.btn-pill .chevron { display: inline-flex; transition: transform 0.2s ease; }
+.btn-pill .chevron svg { height: 0.8em; }
+.related[open] .chevron { transform: rotate(180deg); }
+.related-menu {
+  position: absolute;
+  top: calc(100% + 10px);
+  left: 50%;
+  z-index: 20;
+  min-width: 230px;
+  padding: 6px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: #fff;
+  box-shadow: 0 10px 30px rgba(18, 38, 31, 0.14);
+  text-align: left;
+  transform: translateX(-50%);
+}
+.related-menu a {
+  display: block;
+  padding: 9px 12px;
+  border-radius: 8px;
+  color: var(--text);
+  font-weight: 600;
+  text-decoration: none;
+}
+.related-menu a:hover,
+.related-menu a:focus-visible { background: var(--band-mint); color: var(--green-dark); outline: none; }
+
+.btn-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6em;
+  padding: 0.62em 1.4em;
+  border-radius: 999px;
+  background: var(--green);
+  color: #fff;
+  font-size: 1.05rem;
+  font-weight: 600;
+  line-height: 1.4;
+  text-decoration: none;
+  box-shadow: 0 2px 8px rgba(0, 158, 115, 0.22);
+  transition: background-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+}
+.btn-pill:hover {
+  background: var(--green-dark);
+  box-shadow: 0 6px 16px rgba(0, 158, 115, 0.28);
+  transform: translateY(-1px);
+}
+.btn-pill:focus-visible {
+  outline: 3px solid var(--green-soft);
+  outline-offset: 3px;
+}
+.btn-pill svg {
+  width: auto;
+  height: 1.2em;
+  fill: currentColor;
+  flex: none;
+}
+
+.intro-video {
+  position: relative;
+  max-width: 1000px;
+  margin: 48px auto 0;
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 12px 36px rgba(18, 38, 31, 0.16);
+  aspect-ratio: 16 / 9;
+  background: #0F1714;
+}
+.intro-video video,
+.intro-video iframe {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  object-fit: contain;
+}
+
+
+/* =========================================================================
+   Overall framework
+   ========================================================================= */
+
+/* Column widths proportional to aspect ratio so the figure and video share a height. */
+.fw-row {
+  display: grid;
+  grid-template-columns: minmax(0, 3.497fr) minmax(0, 1.778fr);
+  align-items: start;
+  column-gap: 24px;
+}
+.fw-main { display: contents; }   /* its children are grid items on wide screens */
+.fw-figure,
+.fw-media {
+  min-width: 0;
+  margin: 0;
+}
+.fw-figure { grid-column: 1; grid-row: 1; }
+.fw-media { grid-column: 2; grid-row: 1; }
+
+.fw-stack {
+  position: relative;
+  aspect-ratio: 3200 / 915;
+}
+.fw-stack img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+.fw-stack img[data-layer]:not([data-layer="base"]) {
+  opacity: 0;
+  transition: opacity 0.35s ease;
+}
+.fw-stack img.is-active { opacity: 1 !important; }
+
+.fw-video {
+  aspect-ratio: 16 / 9;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  overflow: hidden;
+  background: #fff;
+}
+.fw-video video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  background: #fff;
+}
+
+.caption {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.45em;
+  margin: 10px 0 0;
+  color: var(--muted);
+  font-size: 0.86rem;
+  line-height: 1.4;
+}
+.caption svg { width: 0.95em; height: 0.95em; margin-top: 0.22em; fill: currentColor; flex: none; }
+.fw-media .caption { justify-content: flex-end; }
+.hint-touch { display: none; }
+@media (hover: none) {
+  .hint-hover { display: none; }
+  .hint-touch { display: inline; }
+}
+
+.fw-text {
+  grid-column: 1 / -1;
+  grid-row: 2;
+  width: 100%;
+  margin-top: 40px;
+}
+.fw-text p {
+  margin: 0 0 6px;
+  padding: 8px 16px;
+  border-left: 3px solid transparent;
+  border-radius: 0 10px 10px 0;
+  transition: background-color 0.25s ease, border-color 0.25s ease;
+}
+.fw-text p[data-hl] {
+  border-left-color: var(--green-soft);
+  cursor: default;
+}
+.fw-text p[data-hl]:focus-visible { outline: none; }
+.fw-text p.is-active {
+  border-left-color: var(--green);
+  background: rgba(0, 158, 115, 0.06);
+}
+
+/* =========================================================================
+   Zoomable media + lightbox
+   ========================================================================= */
+
+[data-zoom] { cursor: zoom-in; }
+[data-zoom]:focus-visible {
+  outline: 3px solid var(--green);
+  outline-offset: 4px;
+  border-radius: 6px;
+}
+
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 56px 24px 32px;
+  background: rgba(12, 20, 17, 0.88);
+  cursor: zoom-out;
+  animation: lb-fade 0.2s ease;
+}
+.lightbox[hidden] { display: none; }
+.lightbox-stage {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  overscroll-behavior: contain;
+}
+.lightbox-stage > * {
+  margin: auto;               /* centers, but stays scrollable when larger than the stage */
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  border-radius: 8px;
+  background: #fff;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+  cursor: default;
+}
+.lightbox-stage:focus-visible { outline: 2px solid rgba(255, 255, 255, 0.6); outline-offset: -2px; }
+.lightbox-stage > img.is-pannable {
+  width: var(--pan-width);
+  max-width: none;
+  max-height: none;
+}
+.lightbox-close {
+  position: absolute;
+  top: 12px;
+  right: 14px;
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.12);
+  color: #fff;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+.lightbox-close:hover { background: rgba(255, 255, 255, 0.24); }
+.lightbox-close:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
+.lightbox-close svg { width: 16px; height: 16px; fill: currentColor; }
+
+@keyframes lb-fade { from { opacity: 0; } to { opacity: 1; } }
+
+/* =========================================================================
+   Results: figures
+   ========================================================================= */
+
+.fig-pair {
+  display: flex;
+  align-items: stretch;
+  gap: 28px;
+  margin-bottom: 44px;
+}
+.fig-card {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  margin: 0;
+  padding: 20px 22px 22px;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: #fff;
+  box-shadow: 0 1px 2px rgba(18, 38, 31, 0.04), 0 8px 24px rgba(18, 38, 31, 0.05);
+}
+.fig-card:nth-child(1) { flex: 1.79 1 0; }
+.fig-card:nth-child(2) { flex: 1.68 1 0; }
+.fig-card figcaption {
+  margin-bottom: 14px;
+  text-align: center;
+  color: var(--text);
+  font-size: 1.1rem;
+  font-weight: 700;
+  line-height: 1.35;
+}
+.fig-card img {
+  width: 100%;
+  height: auto;
+  margin-top: auto;
+}
+
+/* =========================================================================
+   Results: CBF comparison
+   ========================================================================= */
+
+.trio {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 28px;
+}
+.vid-card { margin: 0; }
+.vid-card h3 {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  min-height: 2.7em;
+  margin: 0 0 12px;
+  text-align: center;
+  color: var(--text);
+  font-size: 1.08rem;
+  font-weight: 700;
+  line-height: 1.35;
+}
+.vid-card--ours h3 { color: var(--green); }
+.vid-card video {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border-radius: var(--radius);
+}
+.vid-card p {
+  margin: 14px 0 0;
+  text-align: center;
+  color: var(--text-soft);
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+/* =========================================================================
+   Results: real-robot scenarios
+   ========================================================================= */
+
+.scenario + .scenario { margin-top: 56px; }
+
+.scenario-head { margin-bottom: 18px; }
+.scenario-head h3 {
+  margin: 0 0 4px;
+  color: var(--text);
+  font-size: 1.3rem;
+  font-weight: 700;
+  line-height: 1.35;
+}
+.scenario-head p {
+  margin: 0;
+  color: var(--text-soft);
+}
+
+/* Front and top views share a height: widths follow each clip's aspect ratio. */
+.pair {
+  display: flex;
+  gap: 14px;
+}
+.pair-item {
+  flex: var(--ar) 1 0;
+  min-width: 0;
+  aspect-ratio: var(--ar);
+}
+.pair-item video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: var(--radius);
+}
+
+/* ---- Carousel ---- */
+
+.carousel-viewport {
+  overflow: hidden;
+  touch-action: pan-y;
+  transition: height 0.4s ease;
+}
+.carousel-track {
+  display: flex;
+  align-items: flex-start;
+  transition: transform 0.55s cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+.slide {
+  flex: 0 0 100%;
+  min-width: 0;
+}
+
+.pills {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 18px;
+}
+.pill {
+  position: relative;
+  width: 30px;
+  height: 10px;
+  padding: 0;
+  border: 0;
+  border-radius: 999px;
+  background: #C4D6CF;
+  cursor: pointer;
+  transition: width 0.3s ease, background-color 0.3s ease;
+}
+.pill::before {                 /* larger hit area */
+  content: "";
+  position: absolute;
+  inset: -12px -5px;
+}
+.pill:hover { background: #A5C3B8; }
+.pill[aria-selected="true"] {
+  width: 52px;
+  background: var(--green);
+  cursor: default;
+}
+.pill:focus-visible { outline: 3px solid var(--green-soft); outline-offset: 3px; }
+
+/* =========================================================================
+   BibTeX
+   ========================================================================= */
+
+.bibtex {
+  position: relative;
+  max-width: var(--prose);
+  margin-inline: auto;
+}
+.bibtex pre {
+  margin: 0;
+  padding: 22px 24px;
+  overflow-x: auto;
+  white-space: pre-wrap;          /* wrap long fields instead of scrolling; copying keeps the original lines */
+  overflow-wrap: anywhere;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: #F6F9F8;
+  color: var(--text);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace;
+  font-size: 0.88rem;
+  line-height: 1.65;
+}
+.copy-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 12px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: #fff;
+  color: var(--muted);
+  font-family: inherit;
+  font-size: 0.8rem;
+  font-weight: 600;
+  line-height: 1.4;
+  cursor: pointer;
+  transition: color 0.2s ease, border-color 0.2s ease;
+}
+.copy-btn:hover { color: var(--green-dark); border-color: var(--green); }
+.copy-btn:focus-visible { outline: 3px solid var(--green-soft); outline-offset: 2px; }
+.copy-btn svg { width: 0.95em; height: 0.95em; fill: currentColor; display: block; }
+.copy-btn .copied-icon { display: none; }
+.copy-btn.is-copied { color: var(--green-dark); border-color: var(--green); }
+.copy-btn.is-copied .copy-icon { display: none; }
+.copy-btn.is-copied .copied-icon { display: inline; }
+
+/* =========================================================================
+   Responsive
+   ========================================================================= */
+
+@media (max-width: 1024px) {
+  .trio { gap: 20px; }
+  .vid-card h3 { font-size: 1rem; }
+
+  /* Stacked framework: figure, its paragraphs, then the DPCBF video. */
+  .fw-row { grid-template-columns: minmax(0, 1fr); }
+  .fw-main { display: block; }
+  .fw-text { margin-top: 22px; }
+  .fw-media { grid-column: 1; grid-row: auto; width: 100%; max-width: 640px; margin: 36px auto 0; }
+}
+
+/* On portrait screens the (short) figure stays pinned while its paragraphs
+   scroll by, so the highlighted part is always in view. */
+@media (max-width: 1024px) and (max-aspect-ratio: 1/1) {
+  .fw-figure {
+    position: sticky;
+    top: env(safe-area-inset-top, 0px);
+    z-index: 2;
+    padding-block: 10px 6px;
+    background: #fff;
+  }
+  .fw-figure::after {           /* soft edge over the text scrolling underneath */
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 100%;
+    height: 14px;
+    background: linear-gradient(#fff, rgba(255, 255, 255, 0));
+    pointer-events: none;
+  }
+}
+
+@media (max-width: 860px) {
+  .fig-pair { flex-direction: column; }
+  .fig-card:nth-child(n) { flex: none; }
+
+  .trio { grid-template-columns: minmax(0, 1fr); gap: 40px; max-width: 560px; margin-inline: auto; }
+  .vid-card h3 { min-height: 0; font-size: 1.08rem; }
+}
+
+@media (max-width: 700px) {
+  :root { --gutter: 18px; }
+  body { font-size: 16px; }
+
+  .hero-title h1 { --sub: clamp(1.1rem, 5.9vw, 1.75rem); }
+  .hero-title .t-main { font-size: calc(var(--sub) * 1.7); }
+  .hero-title .t-sub br { display: none; }
+
+  .band { padding-block: 52px; }
+  .meta { padding-top: 32px; }
+  .authors { font-size: 1.08rem; }
+  .links { display: grid; grid-template-columns: repeat(2, auto); justify-content: center; gap: 10px; }
+  .links > * { justify-self: stretch; }
+  .links .btn-pill { width: 100%; justify-content: center; padding-inline: 1.05em; }
+  .affiliations { font-size: 0.95rem; }
+  .bibtex pre { padding: 18px 16px; padding-top: 44px; font-size: 0.8rem; }
+  .intro-video { margin-top: 34px; border-radius: 10px; }
+
+  .section-title { font-size: 1.6rem; margin-bottom: 30px; }
+  .prose p, .lead { text-align: left; }
+  .fw-text p { padding: 6px 12px; }
+
+  .pair { flex-direction: column; gap: 10px; }
+  .pair-item { flex: none; width: 100%; }
+
+  .lightbox { padding-inline: 8px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
+}
